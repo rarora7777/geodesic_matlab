@@ -7,7 +7,7 @@ on:
     branches: [ master ]
 
 jobs:
-  build:
+  Linux:
 
     runs-on: ubuntu-latest
 
@@ -20,3 +20,18 @@ jobs:
         cmake ..
     - name: make
       run: cd build; make -j3
+      
+  Windows:
+
+    runs-on: windows-2019
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Configure and build
+      shell: cmd
+      run: |
+          call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\Tools\VsDevCmd.bat" -arch=x64
+          mkdir build
+          cd build
+          cmake ..
+          cmake --build . --config Release
