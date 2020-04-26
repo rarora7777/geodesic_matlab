@@ -20,7 +20,7 @@ For algorithm details, please refer to [readme](./src/#readme).
     cmake ..
     cmake --build . --config Release
 ```  
-2. Add folder containing ```geodesic_(debug|release).dll``` to the MATLAB path.
+2. Add `./src` and the folder containing ```geodesic_(debug|release).dll``` to the MATLAB path.
 
 3. Run ```example[1-5]``` in Matlab.
 
