@@ -10,5 +10,9 @@ jobs:
     steps:
     - uses: actions/checkout@v1
     - name: make
-      run: cd src/ && make debug
+      run: |
+        mkdir -p build
+        cd build
+        cmake ..
+        make -j3
     
