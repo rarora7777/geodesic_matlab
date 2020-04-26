@@ -13,7 +13,7 @@ if nargin == 0          % the simplest way to delete everything is to unload the
    unloadlibrary(geodesic_library);
 else
     if libisloaded(geodesic_library)
-        if strcmp(object.object_type, 'mesh')       
+        if strcmp(object.object_type, 'mesh')
             calllib(geodesic_library, 'delete_mesh', object.id);      % delete mesh and corresponding algorithms
         else                                        
             calllib(geodesic_library, 'delete_algorithm', object.id); % delete a single algorithm

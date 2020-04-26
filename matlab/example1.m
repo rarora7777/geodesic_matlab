@@ -2,7 +2,7 @@
 % Danil Kirsanov, 09/2007 
 
 global geodesic_library;                
-geodesic_library = 'geodesic_debug';      %"release" is faster and "debug" does additional checks
+geodesic_library = 'geodesic_release';      %"release" is faster and "debug" does additional checks
 %geodesic_library = 'geodesic_matlab_api';
 rand('state', 0);                         %comment this statement if you want to produce random mesh every time
 
@@ -13,16 +13,25 @@ N = 300;                                  %number of points in a mesh
 mesh = geodesic_new_mesh(vertices,faces);         %initilize new mesh
 algorithm = geodesic_new_algorithm(mesh, 'exact');      %initialize new geodesic algorithm
 
-vertex_id = 1;                             %create a single source at vertex #1
-source_points = {geodesic_create_surface_point('vertex',vertex_id,vertices(vertex_id,:))};
+% vertex_id = 1;                             %create a single source at vertex #1
+% source_points = {geodesic_create_surface_point('vertex',vertex_id,vertices(vertex_id,:))};
+face_id = 48;
+verts_ids = faces(face_id, :);
+v0 = vertices(verts_ids(1), :);
+v1 = vertices(verts_ids(2), :);
+v2 = vertices(verts_ids(3), :);
+source_points = {geodesic_create_surface_point('face', face_id, 0.33*v0 + 0.33*v1 + 0.34*v2)};
 
+tic;
 geodesic_propagate(algorithm, source_points);   %propagation stage of the algorithm (the most time-consuming)
 
 vertex_id = N;                              %create a single destination at vertex #N
 destination = geodesic_create_surface_point('vertex',vertex_id,vertices(vertex_id,:));
+disp(['Time taken: ' num2str(toc)]);
+
 path = geodesic_trace_back(algorithm, destination);     %find a shortest path from source to destination
 
-distances = zeros(N,1);              %find distances to all vertices of the mesh (actual pathes are not computed)
+% distances = zeros(N,1);              %find distances to all vertices of the mesh (actual pathes are not computed)
 
 [source_id, distances] = geodesic_distance_and_source(algorithm);     %find distances to all vertices of the mesh; in this example we have a single source, so source_id is always equal to 1
 

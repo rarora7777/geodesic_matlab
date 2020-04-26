@@ -2,7 +2,7 @@
 % if distance is negative, the best source cannot be found (for example, because the propagation was stopped before it reached this point)
 % Danil Kirsanov, 09/2007 
 
-function [source_id, distance] = geodesic_best_source(algorithm, destination)
+function [source_id, distance] = geodesic_distance_and_source(algorithm, destination)
 
 global geodesic_library;
 
@@ -10,7 +10,7 @@ if nargin == 2
     d = geodesic_convert_surface_points({destination});
 
     tmp = 1;
-    [source_id, tmp1, distance] = calllib(geodesic_library, 'distance_and_source', algorithm.id, d, tmp);
+    [source_id, ~, distance] = calllib(geodesic_library, 'distance_and_source', algorithm.id, d, tmp);
     source_id = source_id + 1;
 else                                    %return distances and sources for all vertices
     tmp = libpointer('doublePtrPtr');

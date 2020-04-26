@@ -13,5 +13,5 @@ for i=1:length(path)
     x(i) = path{i}.x;
     y(i) = path{i}.y;
     z(i) = path{i}.z;
-end;
+end
 

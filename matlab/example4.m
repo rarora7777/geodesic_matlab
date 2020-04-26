@@ -2,7 +2,7 @@
 % Danil Kirsanov, 09/2007 
 
 global geodesic_library;                
-geodesic_library = 'geodesic_debug';      %"release" is faster and "debug" does additional checks
+geodesic_library = 'geodesic_release';      %"release" is faster and "debug" does additional checks
 rand('state', 0);                         %comment this statement if you want to produce random mesh every time
 
 [vertices,faces] = create_flat_triangular_mesh(0.2, 0); 
@@ -12,14 +12,14 @@ mesh = geodesic_new_mesh(vertices,faces);         %initilize new mesh
 algorithm = geodesic_new_algorithm(mesh, 'exact');      %initialize new geodesic algorithm
 
 source_points = {};
-for vertex_id = [26,N-5];          %create two source points 
+for vertex_id = [26,N-5]         %create two source points 
     source_points{end+1} = geodesic_create_surface_point('vertex',vertex_id, vertices(vertex_id,:));
-end;
+end
 
 stop_points = {};
-for vertex_id = [29,N-14];          %create stop points
+for vertex_id = [29,N-14]          %create stop points
     stop_points{end+1} = geodesic_create_surface_point('vertex',vertex_id, vertices(vertex_id,:));
-end;
+end
 
 stop_distance = 0.1;            %define stop distance
 
@@ -37,7 +37,7 @@ for i=1:N
     if(d < 1e10)        %if distance is found, we can trace a path
         path{i} = geodesic_trace_back(algorithm, q);     %find a shortest path from source to destination
     end
-end;
+end
 
 undefined = find(distances > 1e10);     %find vertices for which the distances are undefined
 defined = find(distances < 1e10);     
@@ -55,11 +55,11 @@ daspect([1 1 1]);
 for i=1:length(path)                   %plot paths to all vertices with finite distances                                         
     [x,y,z] = extract_coordinates_from_path(path{i});
     plot3(x,y,z,'r');    
-end;
+end
 
-for i=1:length(stop_points);        %show stop vertices
+for i=1:length(stop_points)        %show stop vertices
     h = plot3(stop_points{i}.x,stop_points{i}.y,stop_points{i}.z,'ro','MarkerSize',5, 'MarkerFaceColor', 'r');
-end;
+end
 legend(h, 'stop vertices');
 
 geodesic_delete;

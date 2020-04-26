@@ -12,7 +12,7 @@ subdivision_level = 5;     %number of additional vertices per edge; each mesh tr
 number_of_isolines = 10;                     
 
 global geodesic_library;                
-geodesic_library = 'geodesic_debug';      %"release" is faster and "debug" does additional checks
+geodesic_library = 'geodesic_release';      %"release" is faster and "debug" does additional checks
 rand('state', 0);                         %comment this statement if you want to produce random mesh every time
 
 [vertices,faces] = create_flat_triangular_mesh(0.2, 0); 
@@ -28,9 +28,9 @@ mesh = geodesic_new_mesh(vertices,faces);         %initilize new mesh
 algorithm = geodesic_new_algorithm(mesh, 'exact');      %initialize new geodesic algorithm
 
 source_points = {};
-for vertex_id = [26,N-5, floor(N/2)-3, floor(N/2)+3];          %create source points 
+for vertex_id = [26,N-5, floor(N/2)-3, floor(N/2)+3]          %create source points 
     source_points{end+1} = geodesic_create_surface_point('vertex',vertex_id, vertices(vertex_id,:));
-end;
+end
 
 geodesic_propagate(algorithm, source_points); 
 
@@ -55,10 +55,10 @@ for face_id = 1:size(faces,1)
         q = geodesic_create_surface_point('face',face_id,sub_vertices(sub_index,:));
         [source_id, d] = geodesic_distance_and_source(algorithm, q);
         sub_distances(sub_index) = d;
-    end;
+    end
     
-    selected_distances = find(isolines_distances >= min(sub_distances) & ...
-                              isolines_distances <= max(sub_distances));
+    selected_distances = isolines_distances >= min(sub_distances) & ...
+                              isolines_distances <= max(sub_distances);
     selected_distances = isolines_distances(selected_distances);
                           
     for tri_index = 1:size(sub_tri,1)               %intersection of the equidistance curve with every subdivision triangle is approximated as a straight line
@@ -74,21 +74,21 @@ for face_id = 1:size(faces,1)
                     p(end+1,:) = sub_vertices(index1,:);
                 end
                 
-                if isodistance > min(d1,d2) & isodistance < max(d1,d2)   %draw equidistant curve
+                if isodistance > min(d1,d2) && isodistance < max(d1,d2)   %draw equidistant curve
                     a = (isodistance - d2)/(d1 - d2);       % I believe that division by zero will never happen here
                     p(end+1,:) = a*sub_vertices(index1,:) + (1-a)*sub_vertices(index2,:);
-                end;
+                end
             end
             if size(p,1) == 2
                  plot3(p(:,1), p(:,2),p(:,3),'b', 'LineWidth', 2);
             end
         end
-    end;
-end;
+    end
+end
 
-for i=1:length(source_points);
+for i=1:length(source_points)
     h = plot3(source_points{i}.x,source_points{i}.y,source_points{i}.z,'ro','MarkerSize',5, 'MarkerFaceColor', 'r');
-end;
+end
 
 campos([0, 0, 5])
 legend(h, 'sources');

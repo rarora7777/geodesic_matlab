@@ -2,7 +2,7 @@
 % Danil Kirsanov, 09/2007 
 
 global geodesic_library;                
-geodesic_library = 'geodesic_debug';      %"release" is faster and "debug" does additional checks
+geodesic_library = 'geodesic_release';      %"release" is faster and "debug" does additional checks
 
 rand('state', 0);                         %comment this statement if you want to produce random mesh every time
 analysis = {};
@@ -20,7 +20,7 @@ analysis{2}.N = length(analysis{2}.vertices);  %another simple mesh for sanity c
 analysis{2}.vertices(:,1) = analysis{2}.vertices(:,1) + 2.5;      %shift second mesh along x-axis
 
 hold off;
-for i = 1:length(analysis);                %generate two meshes and corresponding algorithms
+for i = 1:length(analysis)                %generate two meshes and corresponding algorithms
     analysis{i}.mesh = geodesic_new_mesh(analysis{i}.vertices, analysis{i}.faces);         %initilize new mesh
     analysis{i}.algorithm{1} = geodesic_new_algorithm(analysis{i}.mesh, 'exact');   %initialize exact algorithm
     analysis{i}.algorithm{2} = geodesic_new_algorithm(analysis{i}.mesh, 'subdivision', 4);   %initialize subdivision algorithm with 3 points per edge
@@ -29,10 +29,10 @@ for i = 1:length(analysis);                %generate two meshes and correspondin
     trisurf(analysis{i}.faces,analysis{i}.vertices(:,1),analysis{i}.vertices(:,2),analysis{i}.vertices(:,3),...
         'FaceColor', 'w', 'EdgeColor', 'k', 'FaceAlpha', 0.99);       %plot the mesh
     hold on;
-end;
+end
 
 colors = {'r','b', 'g'};           
-for i = 1:length(analysis);
+for i = 1:length(analysis)
     vertex_id = 1;                      %put a single source at vertex #1
     source_points = {geodesic_create_surface_point('vertex',vertex_id, analysis{i}.vertices(vertex_id,:))};
     

@@ -13,21 +13,21 @@ tri = zeros(N_t,3);
 
 n_p = 1;
 n_t = 1;
-for i=1:N;
+for i=1:N
     K = N-i+1;
     for j=1:K
         c = step*[j-1, i-1];
         weights(n_p,:) = [c, 1-sum(c)];       
        
-        if i<N & j<K
+        if i<N && j<K
             tri(n_t,:) = [n_p, n_p + 1, n_p + K];
             n_t = n_t + 1;
             if j<K-1
                 tri(n_t,:) = [n_p + 1, n_p + K, n_p + K + 1];
                 n_t = n_t + 1;
-            end;
-        end;
+            end
+        end
         
         n_p = n_p+1;        
-    end;
-end;
+    end
+end

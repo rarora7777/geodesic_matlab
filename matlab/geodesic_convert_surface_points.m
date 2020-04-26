@@ -7,7 +7,7 @@ function q = geodesic_convert_surface_points(p)
 if isempty(p)
     q = [];
     return;
-end;
+end
 
 point_types = {'vertex', 'edge', 'face'};
 
@@ -42,5 +42,5 @@ else                    %convert from C++ to matlab
         point.id = p(shift + 5) + 1;
         
         q{i} = point;
-    end;
-end;
+    end
+end

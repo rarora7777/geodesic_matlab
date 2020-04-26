@@ -2,14 +2,14 @@
 % Danil Kirsanov, 09/2007 
 
 global geodesic_library;                
-geodesic_library = 'geodesic_debug';      %"release" is faster and "debug" does additional checks
+geodesic_library = 'geodesic_release';      %"release" is faster and "debug" does additional checks
 rand('state', 0);                         %comment this statement if you want to produce random mesh every time
 
 N = 120;                                  %number of points in a mesh
 [vertices,faces] = create_hedgehog_mesh(N, 0.1);   %create "noisy sphere" mesh; "vertices" contains 3D vertex coordinates; "faces" contains vertex id's for every triangle
 
 [mesh, edge_to_vertex, edge_to_face] = geodesic_new_mesh(vertices,faces);         %initilize new mesh and receive edge info
-disp(sprintf('mesh has %d edges', length(edge_to_vertex)));
+fprintf('mesh has %d edges', length(edge_to_vertex));
 
 source_points = {};
 vertex_id = 10;         %put the first source at the vertex #10
