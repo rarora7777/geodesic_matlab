@@ -10,41 +10,21 @@ For algorithm details, please refer to [readme](./src/#readme).
 
 ## Build
 
-### Windows + MSVC
-#### C++ executable 
 ![](https://img.shields.io/badge/build-passing-brightgreen)
 
-1. Build projects ```example0``` and ```example1``` in ```geodesic.sln```.
+1. Build the shared library (`.dll` or `.so`)
 
-#### MATLAB API functions 
-![](https://img.shields.io/badge/build-passing-brightgreen)
+```
+    mkdir build
+    cd build
+    cmake ..
+    cmake --build . --config Release
+```  
+2. Add folder containing ```geodesic_(debug|release).dll``` to the MATLAB path.
 
-<!---Tested on Windows 10 + MSVC 2017 + MATLAB R2018a. -->
-
-1. Build project ```geodesic``` in ```geodesic.sln```. 
-2. Copy built library ```geodesic_(debug|release).dll``` to the folder ```matlab```.
 3. Run ```example[1-5]``` in Matlab.
 
-### Linux
-#### C++ executable 
-![](https://img.shields.io/badge/build-passing-brightgreen)
-
-```bash
-cd src
-make example0
-./example0.out hedgehog_mesh.txt 3 14
-```
-
-#### MATLAB API functions 
-![](https://img.shields.io/badge/build-passing-brightgreen)
-
-1. Build shared library
-```bash
-cd src
-make debug
-cp ./geodesic_debug.so ../matlab/
-```
-2. Run ```example[1-5]``` in Matlab.
+4. [Optional] Run `./example0.out` (Linux) or `./Release/example0.exe` (Windows) with arguments `hedgehog_mesh.txt 3 14`.
 
 ## Known Issues
 
