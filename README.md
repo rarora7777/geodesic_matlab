@@ -10,7 +10,7 @@ For algorithm details, please refer to [readme](./src/#readme).
 
 ## Build
 
-![](https://img.shields.io/badge/build-passing-brightgreen)
+![C/C++ CI](https://github.com/rarora7777/geodesic_matlab/workflows/C/C++%20CI/badge.svg)
 
 1. Build the shared library (`.dll` or `.so`)
 
