@@ -105,6 +105,33 @@ GEODESIC_DLL_IMPORT long trace_back(long algorithm_id,
 	return output_path.size();
 }
 
+GEODESIC_DLL_IMPORT long trace_back_implicit(long algorithm_id,
+	double* destination,
+	double** path)
+{
+	geodesic::SurfacePoint point;
+	geodesic::GeodesicAlgorithmBase* algorithm = algorithms[algorithm_id].get();
+	geodesic::fill_surface_point_structure(&point,
+		destination,
+		algorithm->mesh());
+
+	algorithm->trace_back(point,
+		output_path);
+
+	std::size_t mesh_id = find_mesh_id(algorithm->mesh());
+	output_buffer.allocate<double>(output_path.size() * 4);
+	for (std::size_t i = 0; i < output_path.size(); ++i)
+	{
+		geodesic::fill_surface_point_implicit_double(&output_path[i],
+			output_buffer.get<double>() + 4 * i,
+			mesh_id);
+	}
+
+	*path = output_buffer.get<double>();
+
+	return output_path.size();
+}
+
 GEODESIC_DLL_IMPORT void propagate(long algorithm_id,
 									double* source_points,	
 									long num_sources,

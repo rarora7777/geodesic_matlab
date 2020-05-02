@@ -288,6 +288,15 @@ private:
 class SurfacePoint:public Point3D  //point on the surface of the mesh
 {
 public:
+
+	// store barycentric coordinate
+	// for face, b0, b1 are the first two barycentric coordinates
+	// for edge, b0 = t, s.t. this = (1-t) * edge.v0 + t * edge.v1
+	// b1 is undefined for this case
+	// for vertex, both b0 and b1 are undefined
+
+	double b0 = -1, b1 = -1;
+
 	SurfacePoint():
 		m_p(NULL)
 	{};
@@ -305,6 +314,8 @@ public:
 		add(f->adjacent_vertices()[1]);
 		add(f->adjacent_vertices()[2]);
 		multiply(1./3.);
+		b0 = 1. / 3.;
+		b1 = 1. / 3.;
 	};
 
 	SurfacePoint(edge_pointer e,		//set the surface point in the middle of the edge
@@ -319,6 +330,8 @@ public:
 		x() = b*v0->x() + a*v1->x();
 		y() = b*v0->y() + a*v1->y();
 		z() = b*v0->z() + a*v1->z();
+
+		b0 = a;
 	};
 
 	SurfacePoint(base_pointer g, 

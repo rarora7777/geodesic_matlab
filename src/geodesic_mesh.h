@@ -522,6 +522,28 @@ inline void fill_surface_point_double(geodesic::SurfacePoint* point,
 	}
 }
 
+inline void fill_surface_point_implicit_double(geodesic::SurfacePoint* point,
+	double* data,
+	long mesh_id)
+{
+	data[0] = point->b0;
+	data[1] = point->b1;
+	data[3] = point->base_element()->id();
+
+	if (point->type() == VERTEX)		//vertex
+	{
+		data[2] = 0;
+	}
+	else if (point->type() == EDGE)	//edge
+	{
+		data[2] = 1;
+	}
+	else				//face
+	{
+		data[2] = 2;
+	}
+}
+
 } //geodesic
 
 #endif	

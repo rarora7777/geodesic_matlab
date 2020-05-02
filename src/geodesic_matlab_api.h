@@ -35,6 +35,10 @@ GEODESIC_DLL_IMPORT long trace_back(long algorithm_id,		//using procomputed dist
 									double* destination,
 									double** path);
 
+GEODESIC_DLL_IMPORT long trace_back_implicit(long algorithm_id,		//using procomputed distance field, compute a shortest path from destination to the closest source
+											 double* destination,
+											 double** path);
+
 GEODESIC_DLL_IMPORT long distance_and_source(long algorithm_id,		//quickly find what source this point belongs to and what is the distance to this source
 											 double* destination,			
 											 double* best_source_distance);
