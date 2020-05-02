@@ -119,11 +119,11 @@ GEODESIC_DLL_IMPORT long trace_back_implicit(long algorithm_id,
 		output_path);
 
 	std::size_t mesh_id = find_mesh_id(algorithm->mesh());
-	output_buffer.allocate<double>(output_path.size() * 4);
+	output_buffer.allocate<double>(output_path.size() * 7);
 	for (std::size_t i = 0; i < output_path.size(); ++i)
 	{
 		geodesic::fill_surface_point_implicit_double(&output_path[i],
-			output_buffer.get<double>() + 4 * i,
+			output_buffer.get<double>() + 7 * i,
 			mesh_id);
 	}
 
